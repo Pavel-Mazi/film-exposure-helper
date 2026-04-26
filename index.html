@@ -202,8 +202,14 @@
       <label class="label" for="iso">Плёнка</label>
       <select id="iso">
         <option value="100">ISO 100</option>
+        <option value="125">ISO 125</option>
+        <option value="160">ISO 160</option>
         <option value="200" selected>ISO 200</option>
+        <option value="250">ISO 250</option>
+        <option value="320">ISO 320</option>
         <option value="400">ISO 400</option>
+        <option value="500">ISO 500</option>
+        <option value="640">ISO 640</option>
         <option value="800">ISO 800</option>
       </select>
     </section>
@@ -256,7 +262,7 @@
               <div class="detail-name">Blur</div>
               <div class="detail-pair" id="blurPair">1/125 · f/22</div>
             </div>
-            <div class="detail-desc">Более открытая диафрагма, меньше глубина резкости, фон размывается сильнее. Следи, чтобы выдержка не стала слишком длинной.</div>
+            <div class="detail-desc">Более длинная выдержка и более закрытая диафрагма. Может дать больше глубины резкости, но следи за смазом.</div>
           </div>
         </div>
       </details>
@@ -336,7 +342,7 @@
       const freezeShutterIndex = clampIndex(balancedShutterIndex + 1, 0, shutterStops.length - 1);
       const freezeApertureIndex = clampIndex(balancedApertureIndex - 1, 0, apertureStops.length - 1);
 
-      const blurApertureIndex = clampIndex(balancedApertureIndex - 1, 0, apertureStops.length - 1);
+      const blurApertureIndex = clampIndex(balancedApertureIndex + 1, 0, apertureStops.length - 1);
       const blurShutterIndex = clampIndex(balancedShutterIndex - 1, 0, shutterStops.length - 1);
 
       const balancedShutter = shutterStops[balancedShutterIndex];
@@ -356,7 +362,9 @@
     }
 
     const savedISO = localStorage.getItem('film_helper_iso');
-    if (savedISO && [100,200,400,800].includes(Number(savedISO))) {
+    const availableISOValues = Array.from(isoSelect.options).map(option => option.value);
+
+    if (savedISO && availableISOValues.includes(savedISO)) {
       isoSelect.value = savedISO;
     }
 
